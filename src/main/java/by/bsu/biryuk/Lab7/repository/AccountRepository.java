@@ -12,5 +12,5 @@ import java.util.List;
 public interface AccountRepository extends CrudRepository<Account, Long> {
 
     @Query("SELECT a FROM Account a WHERE a.client.id = :client_id")
-    public List<Account> getClientAccounts(@Param("clientId") int client_id);
+    public List<Account> getClientAccounts(@Param("client_id") int client_id);
 }
