@@ -1,4 +1,4 @@
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
     <head>
         <style>
             /* General body styling */
@@ -254,24 +254,25 @@
     </head>
     <body>
         <form action="" method="GET">
-            <label for="clientId">Client ID:</label>
+            <label for="clientId" th:text="#{accounts.client.id}">Client ID:</label>
             <input type="number" id="clientId" name="ClientId" 
+                   th:placeholder="#{accounts.client.id.placeholder}"
                    placeholder="Enter client ID" 
                    required>
             <br><br>
             
-            <input type="submit" value="Submit">
-            <input type="reset" value="Clear">
+            <input type="submit" th:value="#{accounts.submit}" value="Submit">
+            <input type="reset" th:value="#{accounts.clear}" value="Clear">
         </form>
         
         <div th:if="${accounts != null and !accounts.isEmpty()}">
             <table>
                 <thead>
                     <tr>
-                        <th>Account ID</th>
-                        <th>Balance</th>
-                        <th>Status</th>
-                        <th>Created Date</th>
+                        <th th:text="#{accounts.account.id}">Account ID</th>
+                        <th th:text="#{accounts.balance}">Balance</th>
+                        <th th:text="#{accounts.status}">Status</th>
+                        <th th:text="#{accounts.created.date}">Created Date</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -281,8 +282,8 @@
                             1000.50 €
                         </td>
                         <td>
-                            <span th:if="${account.active}" class="active">Active</span>
-                            <span th:unless="${account.active}" class="inactive">Inactive</span>
+                            <span th:if="${account.active}" class="active" th:text="#{accounts.active}">Active</span>
+                            <span th:unless="${account.active}" class="inactive" th:text="#{accounts.inactive}">Inactive</span>
                         </td>
                         <td th:text="${account.createdAt}">
                             12/12/2024
@@ -295,10 +296,11 @@
             <div th:if="${totalPages > 1}" class="pagination">
                 <!-- Previous button -->
                 <a th:if="${currentPage > 0}" 
-                   th:href="@{/pages/accounts(ClientId=${clientId}, page=${currentPage - 1}, size=${pageSize})}">
+                   th:href="@{/pages/accounts(ClientId=${clientId}, page=${currentPage - 1}, size=${pageSize})}"
+                   th:text="#{accounts.pagination.previous}">
                     Previous
                 </a>
-                <span th:unless="${currentPage > 0}" class="disabled">Previous</span>
+                <span th:unless="${currentPage > 0}" class="disabled" th:text="#{accounts.pagination.previous}">Previous</span>
 
                 <!-- Page numbers -->
                 <th:block th:each="pageNum : ${#numbers.sequence(0, totalPages - 1)}">
@@ -312,24 +314,25 @@
 
                 <!-- Next button -->
                 <a th:if="${currentPage < totalPages - 1}" 
-                   th:href="@{/pages/accounts(ClientId=${clientId}, page=${currentPage + 1}, size=${pageSize})}">
+                   th:href="@{/pages/accounts(ClientId=${clientId}, page=${currentPage + 1}, size=${pageSize})}"
+                   th:text="#{accounts.pagination.next}">
                     Next
                 </a>
-                <span th:unless="${currentPage < totalPages - 1}" class="disabled">Next</span>
+                <span th:unless="${currentPage < totalPages - 1}" class="disabled" th:text="#{accounts.pagination.next}">Next</span>
             </div>
 
             <!-- Pagination info -->
             <div th:if="${totalItems != null}" class="pagination-info">
-                Showing page <span th:text="${currentPage + 1}">1</span> of 
-                <span th:text="${totalPages}">1</span> 
-                (Total: <span th:text="${totalItems}">0</span> accounts)
+                <span th:text="#{accounts.pagination.showing(${currentPage + 1}, ${totalPages}, ${totalItems})}">
+                    Showing page 1 of 1 (Total: 0 accounts)
+                </span>
             </div>
         </div>
 
-        <div th:if="${accounts != null and accounts.isEmpty()}" class="no-accounts">
+        <div th:if="${accounts != null and accounts.isEmpty()}" class="no-accounts" th:text="#{accounts.no.accounts}">
             No accounts found for this client.
         </div>
 
-        <a href="../index.html" th:href="@{/}">Return to home</a>
+        <a href="../index.html" th:href="@{/}" th:text="#{accounts.return.home}">Return to home</a>
     </body>
 </html>

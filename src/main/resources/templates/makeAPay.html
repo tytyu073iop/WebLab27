@@ -1,4 +1,4 @@
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
     <head>
         <style>
             /* Reset and base styles */
@@ -413,8 +413,8 @@
         <div class="container">
             <div class="transfer-header">
                 <i class="transfer-icon fas fa-exchange-alt"></i>
-                <h2 class="transfer-title">Transfer Funds</h2>
-                <p class="transfer-subtitle">Move money from your card to any account</p>
+                <h2 class="transfer-title" th:text="#{payment.title}">Transfer Funds</h2>
+                <p class="transfer-subtitle" th:text="#{payment.subtitle}">Move money from your card to any account</p>
             </div>
             
             <div class="form-card">
@@ -425,7 +425,7 @@
                             <div class="flow-icon">
                                 <i class="fas fa-credit-card"></i>
                             </div>
-                            <div class="flow-label">Source Card</div>
+                            <div class="flow-label" th:text="#{payment.flow.source}">Source Card</div>
                         </div>
                         
                         <div class="flow-arrow">
@@ -436,7 +436,7 @@
                             <div class="flow-icon">
                                 <i class="fas fa-money-bill-wave"></i>
                             </div>
-                            <div class="flow-label">Amount</div>
+                            <div class="flow-label" th:text="#{payment.flow.amount}">Amount</div>
                         </div>
                         
                         <div class="flow-arrow">
@@ -447,7 +447,7 @@
                             <div class="flow-icon">
                                 <i class="fas fa-bank"></i>
                             </div>
-                            <div class="flow-label">Destination Account</div>
+                            <div class="flow-label" th:text="#{payment.flow.destination}">Destination Account</div>
                         </div>
                     </div>
                     
@@ -455,11 +455,12 @@
                     <div class="form-group">
                         <label for="cardNum">
                             <i class="fas fa-credit-card"></i>
-                            Card Number (From):
+                            <span th:text="#{payment.source.card}">Card Number (From):</span>
                         </label>
                         <div class="input-wrapper">
                             <i class="input-icon fas fa-credit-card"></i>
                             <input type="number" id="cardNum" name="CardNum" 
+                                   th:placeholder="#{payment.source.card.placeholder}"
                                    placeholder="Enter 16-digit card number" 
                                    required
                                    min="1000000000000000"
@@ -473,11 +474,12 @@
                         <div class="form-group">
                             <label for="AccountIdTo">
                                 <i class="fas fa-bank"></i>
-                                Account ID (To):
+                                <span th:text="#{payment.destination.account}">Account ID (To):</span>
                             </label>
                             <div class="input-wrapper">
                                 <i class="input-icon fas fa-user-circle"></i>
                                 <input type="number" id="AccountIdTo" name="AccountIdTo" 
+                                       th:placeholder="#{payment.destination.account.placeholder}"
                                        placeholder="Enter account ID" 
                                        required>
                             </div>
@@ -486,12 +488,13 @@
                         <div class="form-group">
                             <label for="sum">
                                 <i class="fas fa-euro-sign"></i>
-                                Transfer Amount:
+                                <span th:text="#{payment.amount}">Transfer Amount:</span>
                             </label>
                             <div class="input-wrapper">
                                 <i class="input-icon fas fa-money-bill-wave"></i>
                                 <span class="currency-symbol">€</span>
                                 <input type="number" id="sum" name="Sum" 
+                                       th:placeholder="#{payment.amount.placeholder}"
                                        placeholder="0.00" 
                                        required
                                        step="0.01"
@@ -503,8 +506,8 @@
                     
                     <!-- Button Group -->
                     <div class="button-group">
-                        <input type="submit" value="Transfer Funds" id="submitBtn">
-                        <input type="reset" value="Clear Form" id="resetBtn">
+                        <input type="submit" th:value="#{payment.transfer}" value="Transfer Funds" id="submitBtn">
+                        <input type="reset" th:value="#{payment.clear}" value="Clear Form" id="resetBtn">
                     </div>
                 </form>
                 
@@ -513,7 +516,7 @@
                      th:if="${success}" 
                      th:classappend="${success} ? 'success-message' : ''">
                     <i class="fas fa-check-circle"></i>
-                    <span th:if="${success}">Transfer completed successfully</span>
+                    <span th:if="${success}" th:text="#{payment.success}">Transfer completed successfully</span>
                 </div>
                 
                 <!-- Failure Message -->
@@ -522,7 +525,7 @@
                      th:classappend="${success} == false ? 'failure-message' : ''"
                      th:if="${success != null}">
                     <i class="fas fa-times-circle"></i>
-                    <span th:unless="${success}">Transfer failed. Please check details and try again.</span>
+                    <span th:unless="${success}" th:text="#{payment.failure}">Transfer failed. Please check details and try again.</span>
                 </div>
             </div>
         </div>

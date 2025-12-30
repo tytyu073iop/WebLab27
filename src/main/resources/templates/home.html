@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebLab25 - Bank Staff Panel</title>
+    <title th:text="#{app.title}">WebLab25 - Bank Staff Panel</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -70,6 +70,31 @@
         
         .staff-info i {
             font-size: 1.2rem;
+        }
+        
+        .language-switcher {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .language-switcher a {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 15px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .language-switcher a:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .language-switcher a.active {
+            background-color: rgba(255, 255, 255, 0.4);
+            font-weight: 600;
         }
         
         .welcome-section {
@@ -255,22 +280,28 @@
         <div class="container header-content">
             <div class="bank-logo">
                 <i class="fas fa-university"></i>
-                <h1>WebLab25 Bank</h1>
+                <h1 th:text="#{app.title}">WebLab25 Bank</h1>
             </div>
-            <div class="staff-info">
-                <i class="fas fa-user-shield"></i>
-                <span>Staff Panel | Secure Access</span>
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <div class="staff-info">
+                    <i class="fas fa-user-shield"></i>
+                    <span th:text="#{app.staff.panel}">Staff Panel | Secure Access</span>
+                </div>
+                <div class="language-switcher">
+                    <a th:href="@{/?lang=en}" th:classappend="${#locale.language == 'en' ? 'active' : ''}" th:text="#{language.english}">English</a>
+                    <a th:href="@{/?lang=ru}" th:classappend="${#locale.language == 'ru' ? 'active' : ''}" th:text="#{language.russian}">Русский</a>
+                </div>
             </div>
         </div>
     </header>
     
     <div class="container">
         <div class="welcome-section">
-            <h2>Welcome to Bank Staff Panel</h2>
-            <p>This secure portal is dedicated to authorized bank staff only. From here you can perform various banking operations including viewing client information, processing payments, and managing accounts. Please ensure you follow all security protocols when handling sensitive client data.</p>
+            <h2 th:text="#{home.welcome.title}">Welcome to Bank Staff Panel</h2>
+            <p th:text="#{home.welcome.description}">This secure portal is dedicated to authorized bank staff only. From here you can perform various banking operations including viewing client information, processing payments, and managing accounts. Please ensure you follow all security protocols when handling sensitive client data.</p>
         </div>
         
-        <h2 class="panel-title">Available Actions</h2>
+        <h2 class="panel-title" th:text="#{home.actions.title}">Available Actions</h2>
         
         <div class="actions-grid">
             <div class="action-card">
@@ -278,11 +309,11 @@
                     <div class="card-icon">
                         <i class="fas fa-users"></i>
                     </div>
-                    <h3>Client Accounts</h3>
+                    <h3 th:text="#{home.accounts.title}">Client Accounts</h3>
                 </div>
                 <div class="card-content">
-                    <p>Display detailed information about the accounts of a specific client, including account status, type, and creation date.</p>
-                    <a href="pages/accounts" class="action-link">Access Client Accounts <i class="fas fa-arrow-right"></i></a>
+                    <p th:text="#{home.accounts.description}">Display detailed information about the accounts of a specific client, including account status, type, and creation date.</p>
+                    <a href="pages/accounts" class="action-link" th:href="@{/pages/accounts}"><span th:text="#{home.accounts.link}">Access Client Accounts</span> <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
             
@@ -291,11 +322,11 @@
                     <div class="card-icon">
                         <i class="fas fa-calculator"></i>
                     </div>
-                    <h3>Payment Summary</h3>
+                    <h3 th:text="#{home.payments.title}">Payment Summary</h3>
                 </div>
                 <div class="card-content">
-                    <p>Display the total sum of payments made by a specific client for a specified period with detailed transaction breakdown.</p>
-                    <a href="pages/sumPayments" class="action-link">View Payment Summary <i class="fas fa-arrow-right"></i></a>
+                    <p th:text="#{home.payments.description}">Display the total sum of payments made by a specific client for a specified period with detailed transaction breakdown.</p>
+                    <a href="pages/sumPayments" class="action-link" th:href="@{/pages/sumPayments}"><span th:text="#{home.payments.link}">View Payment Summary</span> <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
             
@@ -304,11 +335,11 @@
                     <div class="card-icon">
                         <i class="fas fa-wallet"></i>
                     </div>
-                    <h3>Account Balance</h3>
+                    <h3 th:text="#{home.balance.title}">Account Balance</h3>
                 </div>
                 <div class="card-content">
-                    <p>Check the current balance of a specific client's account, including available funds and pending transactions.</p>
-                    <a href="pages/accountBalance" class="action-link">Check Account Balance <i class="fas fa-arrow-right"></i></a>
+                    <p th:text="#{home.balance.description}">Check the current balance of a specific client's account, including available funds and pending transactions.</p>
+                    <a href="pages/accountBalance" class="action-link" th:href="@{/pages/accountBalance}"><span th:text="#{home.balance.link}">Check Account Balance</span> <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
             
@@ -317,11 +348,11 @@
                     <div class="card-icon">
                         <i class="fas fa-exchange-alt"></i>
                     </div>
-                    <h3>Make a Payment</h3>
+                    <h3 th:text="#{home.payment.title}">Make a Payment</h3>
                 </div>
                 <div class="card-content">
-                    <p>Process a payment from a client's account to another account, either internal or external to the bank.</p>
-                    <a href="pages/makeAPay" class="action-link">Initiate Payment <i class="fas fa-arrow-right"></i></a>
+                    <p th:text="#{home.payment.description}">Process a payment from a client's account to another account, either internal or external to the bank.</p>
+                    <a href="pages/makeAPay" class="action-link" th:href="@{/pages/makeAPay}"><span th:text="#{home.payment.link}">Initiate Payment</span> <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
             
@@ -330,11 +361,11 @@
                     <div class="card-icon">
                         <i class="fas fa-ban"></i>
                     </div>
-                    <h3>Card Management</h3>
+                    <h3 th:text="#{home.card.title}">Card Management</h3>
                 </div>
                 <div class="card-content">
-                    <p>Block or deactivate a client's card due to loss, theft, suspicious activity, or at client's request.</p>
-                    <a href="pages/deactivateCard" class="action-link">Manage Card Status <i class="fas fa-arrow-right"></i></a>
+                    <p th:text="#{home.card.description}">Block or deactivate a client's card due to loss, theft, suspicious activity, or at client's request.</p>
+                    <a href="pages/deactivateCard" class="action-link" th:href="@{/pages/deactivateCard}"><span th:text="#{home.card.link}">Manage Card Status</span> <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
         </div>

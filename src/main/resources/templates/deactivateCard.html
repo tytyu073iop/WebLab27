@@ -1,4 +1,4 @@
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
     <head>
         <style>
             /* Reset and base styles */
@@ -282,8 +282,8 @@
         <div class="container">
             <div class="warning-header">
                 <i class="warning-icon fas fa-exclamation-triangle"></i>
-                <h2 class="warning-title">Card Deactivation</h2>
-                <p class="warning-subtitle">This action cannot be undone</p>
+                <h2 class="warning-title" th:text="#{card.title}">Card Deactivation</h2>
+                <p class="warning-subtitle" th:text="#{card.subtitle}">This action cannot be undone</p>
             </div>
             
             <div class="form-card">
@@ -291,11 +291,12 @@
                     <div class="form-group">
                         <label for="cardNum">
                             <i class="fas fa-credit-card"></i>
-                            Card Number to Deactivate:
+                            <span th:text="#{card.number}">Card Number to Deactivate:</span>
                         </label>
                         <div class="input-wrapper">
                             <i class="card-icon fas fa-credit-card"></i>
                             <input type="number" id="cardNum" name="CardNum" 
+                                   th:placeholder="#{card.number.placeholder}"
                                    placeholder="Enter 16-digit card number" 
                                    required
                                    min="1000000000000000"
@@ -305,8 +306,8 @@
                     </div>
                     
                     <div class="button-group">
-                        <input type="submit" value="Deactivate Card" id="submitBtn">
-                        <input type="reset" value="Cancel" id="resetBtn">
+                        <input type="submit" th:value="#{card.deactivate}" value="Deactivate Card" id="submitBtn">
+                        <input type="reset" th:value="#{card.cancel}" value="Cancel" id="resetBtn">
                     </div>
                 </form>
                 
@@ -315,7 +316,7 @@
                      th:if="${success}" 
                      th:classappend="${success} ? 'success-message' : ''">
                     <i class="fas fa-check-circle"></i>
-                    <span th:if="${success}">Card successfully deactivated</span>
+                    <span th:if="${success}" th:text="#{card.success}">Card successfully deactivated</span>
                 </div>
                 
                 <!-- Failure Message -->
@@ -324,7 +325,7 @@
                      th:classappend="${success} == false ? 'failure-message' : ''"
                      th:if="${success != null}">
                     <i class="fas fa-times-circle"></i>
-                    <span th:unless="${success}">Card deactivation failed. Please try again or contact support.</span>
+                    <span th:unless="${success}" th:text="#{card.failure}">Card deactivation failed. Please try again or contact support.</span>
                 </div>
             </div>
         </div>
